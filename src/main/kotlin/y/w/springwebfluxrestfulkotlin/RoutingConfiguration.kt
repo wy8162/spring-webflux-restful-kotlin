@@ -9,10 +9,14 @@ class RoutingConfiguration constructor(val bookHandler: BookHandler) {
     @Bean
     fun apiRouteTree() = router {
         ("/api").nest {
-            (GET("") or GET("/hello")) { _ -> ServerResponse.ok().bodyValue("Hell World") }
-            GET("/math") {
-                ServerResponse.ok().bodyValue("math")
+            (GET("") or GET("/hello")) { _ -> ServerResponse.ok().bodyValue("Hello World") }
+
+            accept(MediaType.APPLICATION_JSON).nest {
+                GET("/math") {
+                    ServerResponse.ok().bodyValue("math")
+                }
             }
+
             accept(MediaType.APPLICATION_JSON).nest {
                 ("/book").nest {
                     GET("") { bookHandler.getAllBooks() }
