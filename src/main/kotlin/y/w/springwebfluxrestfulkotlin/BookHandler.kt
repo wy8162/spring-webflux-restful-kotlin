@@ -15,5 +15,6 @@ class BookHandler constructor(val bookService: BookService) {
 
     fun getBookById(id: String): Mono<ServerResponse> = ServerResponse
         .ok()
+        .contentType(MediaType.APPLICATION_JSON)
         .body(BodyInserters.fromPublisher(bookService.getBookById(id), Book::class.java))
 }
